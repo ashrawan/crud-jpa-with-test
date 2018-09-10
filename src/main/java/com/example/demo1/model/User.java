@@ -3,8 +3,8 @@ package com.example.demo1.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
-import javax.validation.constraints.Size;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -32,11 +32,6 @@ public class User {
     private String username;
 
     @Column
-    @NotNull(message="password must be specified.")
-    @Size(min = 2, max = 50, message = "password must be between 2 and 50.")
-    private String password;
-
-    @Column
     @Enumerated(EnumType.STRING)
     private USER_ROLE role;
 
@@ -51,11 +46,10 @@ public class User {
 
     }
 
-    public User(Long id, String fullName, String username, String password, USER_ROLE role, int status) {
+    public User(Long id, String fullName, String username, USER_ROLE role, int status) {
         this.id = id;
         this.fullName = fullName;
         this.username = username;
-        this.password = password;
         this.status = status;
         this.role = role;
     }
@@ -82,14 +76,6 @@ public class User {
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public USER_ROLE getRole() {
@@ -125,7 +111,6 @@ public class User {
                 Objects.equals(id, user.id) &&
                 Objects.equals(fullName, user.fullName) &&
                 Objects.equals(username, user.username) &&
-                Objects.equals(password, user.password) &&
                 Objects.equals(role, user.role) &&
                 Objects.equals(address, user.address);
     }
@@ -133,6 +118,6 @@ public class User {
     @Override
     public int hashCode() {
 
-        return Objects.hash(fullName, username, password, role, status, address);
+        return Objects.hash(fullName, username, role, status, address);
     }
 }

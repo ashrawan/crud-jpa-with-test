@@ -48,7 +48,7 @@ public class AddressControllerTest {
     @Test
     public void allAddress_thenReturnStatusOk() throws Exception{
         given(addressService.getAllAddresss()).willReturn(Arrays.asList(address));
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/rest/address").contentType(MediaType.APPLICATION_JSON);
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/address").contentType(MediaType.APPLICATION_JSON);
         MvcResult result = mvc.perform(requestBuilder).andReturn();
         MockHttpServletResponse response = result.getResponse();
         Assert.assertEquals(HttpStatus.OK.value(), response.getStatus());
@@ -58,7 +58,7 @@ public class AddressControllerTest {
     public void allAddress_whenThereIsNoAddressInTable_thenReturnStatus_NOT_FOUND() throws Exception{
 
         given(addressService.getAllAddresss()).willReturn(null);
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/rest/address").contentType(MediaType.APPLICATION_JSON);
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/address").contentType(MediaType.APPLICATION_JSON);
         MvcResult result = mvc.perform(requestBuilder).andReturn();
         MockHttpServletResponse response = result.getResponse();
         Assert.assertEquals(HttpStatus.NOT_FOUND.value(), response.getStatus());
@@ -68,7 +68,7 @@ public class AddressControllerTest {
     public void getAddressBydId_thenReturnStatusOK() throws Exception {
 
         given(addressService.getAddressById(ID)).willReturn(address);
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/rest/address/"+ID)
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/address/"+ID)
                 .contentType(MediaType.APPLICATION_JSON);
         MvcResult result = mvc.perform(requestBuilder).andReturn();
         MockHttpServletResponse response = result.getResponse();
@@ -79,7 +79,7 @@ public class AddressControllerTest {
     public void getAddressById_whenThereisNoSuchAddressInTable_thenReturnStatus_NOT_FOUND() throws Exception {
 
         given(addressService.getAddressById(ID)).willReturn(null);
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/rest/address/"+ID)
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/address/"+ID)
                 .contentType(MediaType.APPLICATION_JSON);
         MvcResult result = mvc.perform(requestBuilder).andReturn();
         MockHttpServletResponse response = result.getResponse();
@@ -93,7 +93,7 @@ public class AddressControllerTest {
         ObjectMapper mapper = new ObjectMapper();
         String jsonString = mapper.writeValueAsString(address);
         given(addressService.createAddress(address)).willReturn(address);
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.post("/rest/address")
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.post("/address")
                 .accept(MediaType.APPLICATION_JSON).content(jsonString).contentType(MediaType.APPLICATION_JSON);
         MvcResult result = mvc.perform(requestBuilder).andReturn();
         MockHttpServletResponse response = result.getResponse();
@@ -109,7 +109,7 @@ public class AddressControllerTest {
         ObjectMapper mapper = new ObjectMapper();
         String jsonString = mapper.writeValueAsString(address);
         given(addressService.updateAddress(address, ID)).willReturn(true);
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.put("/rest/address/"+ID)
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.put("/address/"+ID)
                 .accept(MediaType.APPLICATION_JSON).content(jsonString).contentType(MediaType.APPLICATION_JSON);
         MvcResult result = mvc.perform(requestBuilder).andReturn();
         MockHttpServletResponse response = result.getResponse();
@@ -124,7 +124,7 @@ public class AddressControllerTest {
         ObjectMapper mapper = new ObjectMapper();
         String jsonString = mapper.writeValueAsString(address);
         given(addressService.updateAddress(address, ID)).willReturn(false);
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.put("/rest/address/"+ID)
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.put("/address/"+ID)
                 .accept(MediaType.APPLICATION_JSON).content(jsonString).contentType(MediaType.APPLICATION_JSON);
         MvcResult result = mvc.perform(requestBuilder).andReturn();
         MockHttpServletResponse response = result.getResponse();
@@ -138,7 +138,7 @@ public class AddressControllerTest {
     public void deleteAddress_thenReturnStatusOK() throws Exception {
 
         given(addressService.deleteAddress(ID)).willReturn(true);
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.delete("/rest/address/"+ID)
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.delete("/address/"+ID)
                 .contentType(MediaType.APPLICATION_JSON);
         MvcResult result = mvc.perform(requestBuilder).andReturn();
         MockHttpServletResponse response = result.getResponse();
@@ -151,7 +151,7 @@ public class AddressControllerTest {
     public void deleteAddress_whenThereIsNoSuchRecordInAddressTable_thenReturnStatus_CONFLICT() throws Exception {
 
         given(addressService.deleteAddress(ID)).willReturn(false);
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.delete("/rest/address/"+ID)
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.delete("/address/"+ID)
                 .contentType(MediaType.APPLICATION_JSON);
         MvcResult result = mvc.perform(requestBuilder).andReturn();
         MockHttpServletResponse response = result.getResponse();

@@ -4,6 +4,8 @@ import com.example.demo1.exception.DataBindingErrorMessage;
 import com.example.demo1.exception.DataNotFoundException;
 import com.example.demo1.exception.ExceptionResponse;
 import org.hibernate.HibernateException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -19,8 +21,11 @@ import java.util.List;
 @ControllerAdvice
 public class ExceptionHandlerController {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(ExceptionHandlerController.class);
+
     @ExceptionHandler(DataNotFoundException.class)
     public ResponseEntity<ExceptionResponse> userNotFoundException(final DataNotFoundException ex, final HttpServletRequest request) {
+        LOGGER.info("DataNotFoundException handled");
         ExceptionResponse error = new ExceptionResponse();
         error.setMessage(ex.getMessage());
         error.setCallerUrl(request.getRequestURI());
@@ -29,6 +34,7 @@ public class ExceptionHandlerController {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<DataBindingErrorMessage> handleMethodArgumentNotValidException(MethodArgumentNotValidException exception) {
+        LOGGER.info("MethodArgumentNotValidException handled");
 //        exception.printStackTrace();
         DataBindingErrorMessage dataBindingErrorMessage=dataBindingErrorMessagesConverter(exception.getBindingResult());
         return new ResponseEntity<>(dataBindingErrorMessage, HttpStatus.NOT_ACCEPTABLE);
@@ -36,6 +42,7 @@ public class ExceptionHandlerController {
 
     @ExceptionHandler(HibernateException.class)
     public ResponseEntity<ExceptionResponse> handleMethodArgumentNotValidException(final HibernateException ex, final HttpServletRequest request) {
+        LOGGER.info("HibernateException handled");
 //        ex.printStackTrace();
         ExceptionResponse error = new ExceptionResponse();
         error.setMessage(ex.getMessage());

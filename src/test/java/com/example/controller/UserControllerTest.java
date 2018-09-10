@@ -50,14 +50,14 @@ public class UserControllerTest {
     @Before
     public void setup() {
         mvc = MockMvcBuilders.standaloneSetup(userController).build();
-        user = new User(ID, "Test Name", "test", "test", User.USER_ROLE.ROLE_ADMIN, 1);
+        user = new User(ID, "Test Name", "test", User.USER_ROLE.ROLE_ADMIN, 1);
     }
 
     @Test
     public void allUsers_thenReturnStatusOK() throws Exception {
 
         given(userService.getAllUsers()).willReturn(Arrays.asList(user));
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/rest/users")
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/users")
                 .contentType(MediaType.APPLICATION_JSON);
         MvcResult result = mvc.perform(requestBuilder).andReturn();
         MockHttpServletResponse response = result.getResponse();
@@ -68,7 +68,7 @@ public class UserControllerTest {
     public void allAddress_whenThereIsNoAddressInTable_thenReturnStatus_NOT_FOUND() throws Exception{
 
         given(userService.getAllUsers()).willReturn(null);
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/rest/users").contentType(MediaType.APPLICATION_JSON);
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/users").contentType(MediaType.APPLICATION_JSON);
         MvcResult result = mvc.perform(requestBuilder).andReturn();
         MockHttpServletResponse response = result.getResponse();
         Assert.assertEquals(HttpStatus.NOT_FOUND.value(), response.getStatus());
@@ -78,7 +78,7 @@ public class UserControllerTest {
     public void getUserBydId_thenReturnStatusOK() throws Exception {
 
         given(userService.getUserById(ID)).willReturn(user);
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/rest/users/"+ID)
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/users/"+ID)
                 .contentType(MediaType.APPLICATION_JSON);
         MvcResult result = mvc.perform(requestBuilder).andReturn();
         MockHttpServletResponse response = result.getResponse();
@@ -89,7 +89,7 @@ public class UserControllerTest {
     public void getUserById_whenThereisNoSuchUserInTable_thenReturnStatus_NOT_FOUND() throws Exception {
 
         given(userService.getUserById(1L)).willReturn(null);
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/rest/users/"+ID)
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/users/"+ID)
                 .contentType(MediaType.APPLICATION_JSON);
         MvcResult result = mvc.perform(requestBuilder).andReturn();
         MockHttpServletResponse response = result.getResponse();
@@ -132,7 +132,7 @@ public class UserControllerTest {
         given(userService.updateUser(user, ID)).willReturn(true);
 
         // used to prepare the request.
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.put("/rest/users/"+ID)
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.put("/users/"+ID)
                 .accept(MediaType.APPLICATION_JSON).content(jsonString).contentType(MediaType.APPLICATION_JSON);
 
         // perform a request and return the result of the executed request for direct access to the results.
@@ -154,7 +154,7 @@ public class UserControllerTest {
         ObjectMapper mapper = new ObjectMapper();
         String jsonString = mapper.writeValueAsString(user);
         given(userService.updateUser(user, ID)).willReturn(false);
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.put("/rest/users/"+ID)
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.put("/users/"+ID)
                 .accept(MediaType.APPLICATION_JSON).content(jsonString).contentType(MediaType.APPLICATION_JSON);
         MvcResult result = mvc.perform(requestBuilder).andReturn();
         MockHttpServletResponse response = result.getResponse();
@@ -167,7 +167,7 @@ public class UserControllerTest {
     @Test
     public void deleteUser_thenReturnStatusOK() throws Exception {
         given(userService.deleteUser(ID)).willReturn(true);
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.delete("/rest/users/"+ID)
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.delete("/users/"+ID)
                 .contentType(MediaType.APPLICATION_JSON);
         MvcResult result = mvc.perform(requestBuilder).andReturn();
         MockHttpServletResponse response = result.getResponse();
@@ -179,7 +179,7 @@ public class UserControllerTest {
     @Test
     public void deleteUser_whenThereIsNoSuchRecordInUserTable_thenReturnStatus_CONFLICT() throws Exception {
         given(userService.deleteUser(ID)).willReturn(false);
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.delete("/rest/users/1")
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.delete("/users/1")
                 .contentType(MediaType.APPLICATION_JSON);
         MvcResult result = mvc.perform(requestBuilder).andReturn();
         MockHttpServletResponse response = result.getResponse();

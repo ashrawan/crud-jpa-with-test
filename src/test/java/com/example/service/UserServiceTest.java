@@ -36,7 +36,7 @@ public class UserServiceTest {
 
     @Before
     public void setUp() throws Exception {
-        user = new User(1L, "Test Name", "test", "test", User.USER_ROLE.ROLE_USER, 1);
+        user = new User(1L, "Test Name", "test", User.USER_ROLE.ROLE_USER, 1);
 
     }
 
