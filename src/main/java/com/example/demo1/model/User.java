@@ -13,8 +13,6 @@ import java.util.Objects;
 @Table(name="user")
 public class User {
 
-    public enum USER_ROLE {ROLE_ADMIN, ROLE_USER}
-
     @Id
     @Column(name = "user_id", nullable = false, updatable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,10 +30,6 @@ public class User {
     private String username;
 
     @Column
-    @Enumerated(EnumType.STRING)
-    private USER_ROLE role;
-
-    @Column
     private  int status;
 
     @JsonIgnore
@@ -46,12 +40,11 @@ public class User {
 
     }
 
-    public User(Long id, String fullName, String username, USER_ROLE role, int status) {
+    public User(Long id, String fullName, String username, int status) {
         this.id = id;
         this.fullName = fullName;
         this.username = username;
         this.status = status;
-        this.role = role;
     }
 
     public Long getId() {
@@ -76,14 +69,6 @@ public class User {
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public USER_ROLE getRole() {
-        return role;
-    }
-
-    public void setRole(USER_ROLE role) {
-        this.role = role;
     }
 
     public int getStatus() {
@@ -111,13 +96,12 @@ public class User {
                 Objects.equals(id, user.id) &&
                 Objects.equals(fullName, user.fullName) &&
                 Objects.equals(username, user.username) &&
-                Objects.equals(role, user.role) &&
                 Objects.equals(address, user.address);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(fullName, username, role, status, address);
+        return Objects.hash(fullName, username, status, address);
     }
 }

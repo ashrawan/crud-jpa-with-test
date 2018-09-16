@@ -10,6 +10,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +20,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -36,7 +38,7 @@ public class UserServiceTest {
 
     @Before
     public void setUp() throws Exception {
-        user = new User(1L, "Test Name", "test", User.USER_ROLE.ROLE_USER, 1);
+        user = new User(1L, "Test Name", "test", 1);
 
     }
 
@@ -62,6 +64,7 @@ public class UserServiceTest {
         LOGGER.info("Test Get User By Id");
         when(userRepository.findById(user.getId())).thenReturn(Optional.of(user));
         Assert.assertEquals(user, userServiceImpl.getUserById(1L));
+//        Mockito.verify(userRepository).findById(1L);
     }
 
     @Test(expected = DataNotFoundException.class)

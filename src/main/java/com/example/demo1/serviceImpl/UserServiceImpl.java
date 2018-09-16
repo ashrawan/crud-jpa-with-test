@@ -48,6 +48,8 @@ public class UserServiceImpl implements UserService {
             throw new DataNotFoundException("cannot find user");
         }
         return user.get();
+
+//        return userRepository.findById(id).orElseThrow(()-> new DataNotFoundException("cannot find user"));
     }
 
     @Override
@@ -59,8 +61,6 @@ public class UserServiceImpl implements UserService {
         if (userByUsername != null ) {
             throw new DataNotFoundException("username already exists");
         }
-
-        user.setRole(User.USER_ROLE.ROLE_USER);
         return userRepository.save(user);
     }
 

@@ -43,14 +43,13 @@ public class UserControllerTest {
     private UserController userController;
 
     User user;
-    User newUser;
 
     private static final long ID = 1;
 
     @Before
     public void setup() {
         mvc = MockMvcBuilders.standaloneSetup(userController).build();
-        user = new User(ID, "Test Name", "test", User.USER_ROLE.ROLE_ADMIN, 1);
+        user = new User(ID, "Test Name", "test", 1);
     }
 
     @Test
